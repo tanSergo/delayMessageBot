@@ -34,17 +34,11 @@
             <version>4.1</version>
         </dependency>
 
-<!--        <dependency>
-            <groupId>org.telegram</groupId>
-            <artifactId>telegrambots-chat-session-bot</artifactId>
-            <version>4.1</version>
-        </dependency>
-
         <dependency>
-            <groupId>org.telegram</groupId>
-            <artifactId>telegrambotsextensions</artifactId>
-            <version>4.1</version>
-        </dependency>-->
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.38</version>
+        </dependency>
 
     </dependencies>
 

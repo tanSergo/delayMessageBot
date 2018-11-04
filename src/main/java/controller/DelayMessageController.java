@@ -27,14 +27,14 @@ public class DelayMessageController {
             return messageService.accessDeniedMessage(msg);
         } else {
             // Проверяем валидность запроса пользователя
-            if (helperService.isValidRequest(txt)) {
-                Map<String, String> parameters = helperService.parseParameters(txt);
-            }
-            else return messageService.getDefaultMessage(msg);
+            Map<String, String> parameters = helperService.parseParameters(txt);
+            if (parameters.isEmpty())
+                return messageService.getDefaultMessage(msg);
 
-// TODO: 01.11.2018 /new, /update, /events. Add DB connection
-            String command = txt.trim().split(" ")[0];
-            switch (command) {
+// TODO: 04.11.2018 Добавить функционал для добавления /new и редактирования /update отложенного события.
+// TODO: 04.11.2018 Добавить функционал для пробуждения отложенных событий
+
+            switch (parameters.get("command")) {
                 case "/start":
                     response = messageService.helloMessage(msg);
                     break;
@@ -42,13 +42,13 @@ public class DelayMessageController {
                     response = messageService.helpMessage(msg);
                     break;
                 case "/new":
-                    response = messageService.delayMessage(msg);
+                    response = messageService.delayMessage(msg, parameters);
                     break;
                 case "/events":
                     response = messageService.getEvents(msg);
                     break;
                 case "/update":
-                    response = messageService.updateEvent(msg);
+                    response = messageService.updateEvent(msg, parameters);
 
                 default: // Если ответ пуст, то отсылаем сообщение о возникших проблемах
                     if (messageService.isResponseEmpty(response))
