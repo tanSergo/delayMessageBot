@@ -31,8 +31,7 @@ public class DelayMessageController {
             if (parameters.isEmpty())
                 return messageService.getDefaultMessage(msg);
 
-// TODO: 04.11.2018 Добавить функционал для добавления /new и редактирования /update отложенного события.
-// TODO: 04.11.2018 Добавить функционал для пробуждения отложенных событий
+// TODO: 05.11.2018 Сделать нормальное логирование и провести поиск багов
 
             switch (parameters.get("command")) {
                 case "/start":

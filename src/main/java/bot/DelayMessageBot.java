@@ -15,11 +15,17 @@ public class DelayMessageBot extends TelegramLongPollingBot {
         ApplProps.getProps("application.properties"); // чтение application.properties
     }
 
+    public static DelayMessageBot getBot() {
+        return bot;
+    }
+
+    private static DelayMessageBot bot;
+
     public static void main(String[] args) {
         ApiContextInitializer.init(); // Инициализируем апи
         TelegramBotsApi botapi = new TelegramBotsApi();
         try {
-            botapi.registerBot(new DelayMessageBot());
+            botapi.registerBot(bot = new DelayMessageBot());
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
@@ -30,11 +36,7 @@ public class DelayMessageBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         DelayMessageController controller = new DelayMessageController();
         SendMessage response = controller.handleRequest(update);
-        try {
-            execute(response);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
+        sendMessage(response);
     }
 
     @Override
@@ -47,5 +49,12 @@ public class DelayMessageBot extends TelegramLongPollingBot {
     public String getBotToken() {
         return ApplProps.get("bot.token");
         //Токен бота
+    }
+    public void sendMessage (SendMessage s) {
+        try {
+            execute(s);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
     }
 }
